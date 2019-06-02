@@ -25,7 +25,9 @@ typedef struct Node_t_t Node_t ;
 Node_t *newNode(const char *value, Node_t *next);
 Node_t *deleteNode(Node_t *current, char **value);
 bool pop(Node_t **head, char **value);
-bool push(Node_t **head, const char *value);
+bool push(const char *value, Node_t **head);
+
+Node_t * BOTTOM = NULL;
 
 /* use void as parameters to silence the gcc warnings */
 int main(void)
@@ -37,7 +39,7 @@ int main(void)
     // fill our stack from the user input
     while(1 == scanf("%s", buffer))
     {
-        push(&Stack, buffer);
+        push(buffer, &Stack);
     }
 
     // write out the sentence in reverse order
@@ -67,7 +69,24 @@ int main(void)
  */
 Node_t *newNode(const char *value, Node_t *next)
 {
-    return NULL;
+    Node_t * temp = (Node_t*)malloc(sizeof(Node_t));
+
+        if(temp != NULL){
+            temp->value = strdup(value);
+            temp->next = NULL;
+
+            if(BOTTOM == NULL){ //first node being put on
+                BOTTOM = temp;
+                next = temp;
+            }
+            else{
+                next->next = temp; //place new temp node on the top of stack
+                next = next->next;
+            }
+           
+        }
+
+    return next;
 }
 
 /**
@@ -96,7 +115,13 @@ bool pop(Node_t **Stack, char **value)
  * update the top of the stack
  * return true if everything is successfull
  */
-bool push(Node_t **Stack, const char *value)
-{
-    return false;
+bool push(const char *value, Node_t **Stack)
+{   
+    bool res = false;
+    Node_t * tmp = newNode(value, *Stack);
+    if(tmp != NULL){
+        res = true;
+        *Stack = tmp;
+    }
+    return res;
 }
