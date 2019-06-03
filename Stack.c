@@ -96,15 +96,21 @@ Node_t *newNode(const char *value, Node_t *next)
  */
 Node_t *deleteNode(Node_t *current, char **value)
 {   
-    if(current == NULL){
-        return current;
-    }else{
-        current->value = &value;
-        Node_t *tmp = current->next;
-        free(current);
-        return tmp;
+    Node_t * tmp = BOTTOM;
+    if(current != NULL){
+
+        while(tmp != NULL){
+            
+            if(tmp->next == current){ //tmp is new top of stack, remove current
+                free(current);
+                tmp->next = NULL;
+                current = tmp;
+            }
+            tmp = tmp->next;
+        }
     }
-    
+
+    return current; 
 }
 
 /**
@@ -115,9 +121,22 @@ Node_t *deleteNode(Node_t *current, char **value)
  */
 bool pop(Node_t **Stack, char **value)
 {   
-    value = (*Stack)->value;
-    deleteNode(*Stack,)
-   
+    bool res = false;
+    if(*Stack != NULL){
+        (*value) = strdup((**Stack).value); //copy the value about to be popped
+    }
+    if(*Stack != BOTTOM){
+        Node_t * tmp = deleteNode(*Stack, value);
+        *Stack = tmp;
+        res = true;
+    }
+    else{ // only one node on stack
+        //free(*Stack);
+        *Stack = NULL;
+        res = true;       
+    }
+
+   return res;
 }
 
 /**
