@@ -95,8 +95,16 @@ Node_t *newNode(const char *value, Node_t *next)
  * and return the next node.
  */
 Node_t *deleteNode(Node_t *current, char **value)
-{
-    return NULL;
+{   
+    if(current == NULL){
+        return current;
+    }else{
+        current->value = &value;
+        Node_t *tmp = current->next;
+        free(current);
+        return tmp;
+    }
+    
 }
 
 /**
@@ -106,8 +114,10 @@ Node_t *deleteNode(Node_t *current, char **value)
  * return true on success
  */
 bool pop(Node_t **Stack, char **value)
-{
-    return false;
+{   
+    value = (*Stack)->value;
+    deleteNode(*Stack,)
+   
 }
 
 /**
