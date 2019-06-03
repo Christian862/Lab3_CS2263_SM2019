@@ -4,9 +4,15 @@
 # TODO: add a target for each .input file in the Data directory to run the compiled LinkedList program with the tests in ./Data
 
 # TODO: add a target that can run all the tests above.
+# link our .o files to make an executable
+ArraySort: ArraySort.o
+	$(COMPILER) $(C_FLAGS) -o Stack Stack.o
 
+# compile the `Stack.o` file
+ArraySort.o: ArraySort.c
+	$(COMPILER) $(C_FLAGS) -c Stack.c
 # Test Cases
-Test: test1 test2 test3
+test: test1 test2 test3
 
 test1: Stack Data/test1.input Data/test1.expected
 	./Stack < Data/test1.input > test1.result
